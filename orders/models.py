@@ -30,6 +30,9 @@ class Pizza(models.Model):
     url = models.CharField(max_length=256)
     price = models.FloatField(default=6)
 
+    class Meta:
+        ordering = ['name']
+
     def __unicode__(self):
         return u"%s (%g€)" % (self.name, self.price)
 
