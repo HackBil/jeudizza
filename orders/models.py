@@ -3,23 +3,22 @@ from django.db import models
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
 
     def __unicode__(self):
         return self.name
 
 
 class Debil(models.Model):
-    first_name = models.CharField(max_length=64)
-    last_name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     company = models.ForeignKey(Company, null=True)
 
     def __unicode__(self):
-        return u"%s %s" % (self.first_name, self.last_name)
+        return self.name
 
 
 class Crust(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     overprice = models.FloatField(default=0)
 
     def __unicode__(self):
@@ -27,7 +26,7 @@ class Crust(models.Model):
 
 
 class Pizza(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     url = models.CharField(max_length=256)
     price = models.FloatField(default=6)
 

@@ -15,7 +15,7 @@ admin.site.register(Crust, CrustAdmin)
 
 
 class DebilAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'company')
+    list_display = ('name', 'company')
 
 admin.site.register(Debil, DebilAdmin)
 
