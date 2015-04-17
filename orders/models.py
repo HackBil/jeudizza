@@ -5,6 +5,9 @@ from django.db import models
 class Company(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
+    class Meta:
+        ordering = ['name']
+
     def __unicode__(self):
         return self.name
 
@@ -12,6 +15,9 @@ class Company(models.Model):
 class Debil(models.Model):
     name = models.CharField(max_length=64)
     company = models.ForeignKey(Company, null=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __unicode__(self):
         return self.name
