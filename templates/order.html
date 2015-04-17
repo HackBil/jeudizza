@@ -1,12 +1,25 @@
-<p>Le détail de la carte est <a href="http://pizza.dominos.fr/la-carte/nos-pizzas" target="_blank">ici</a> !</p>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JEUDIZZA</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="content-language" content="fr" />
 
-<form action="./" method="post">
-  {% csrf_token %}
-  {% for field in form %}
-    <div>
-      {{ field.errors }}
-      {{ field.label_tag }} {{ field }}
-    </div>
-    {% endfor %}
-  <input type="submit" value="JEUDIZZA" />
-</form>
+        <link href="{% static 'css/empty.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <p>Le détail de la carte est <a href="http://pizza.dominos.fr/la-carte/nos-pizzas" target="_blank">ici</a> !</p>
+
+        <form action="./" method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div>
+              {{ field.errors }}
+              {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+          <input type="submit" value="JEUDIZZA" />
+        </form>
+    </body>
+</html>
