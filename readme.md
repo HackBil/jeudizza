@@ -11,8 +11,9 @@ Setup
 * `virtualenv --no-site-packages .v_env` : create a virtual-env for python code
 * `source .v_env/bin/activate` : activate the v_env.
 * `pip install -r requirements.txt` : install all requirements
-* `./manage.py syncdb` : create DB
-* `./manage.py migrate` : migrate DB
+* `./manage.py migrate` : create and migrate DB
+* `./manage.py loaddata seed.json` : seed DB with data
+* `./manage.py createsuperuser` : add your own admin. Or you can use the seeded admin.
 
 ```sh
 git clone git@github.com:HackBil/jeudizza.git
@@ -22,6 +23,7 @@ source .v_env/bin/activate
 pip install -r requirements.txt
 ./manage.py migrate
 ./manage.py loaddata seed.json
+./manage.py createsuperuser
 ```
 
 Running
