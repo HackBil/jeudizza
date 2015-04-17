@@ -20,8 +20,8 @@ cd jeudizza
 virtualenv --no-site-packages .v_env
 source .v_env/bin/activate
 pip install -r requirements.txt
-./manage.py syncdb
 ./manage.py migrate
+./manage.py loaddata seed.json
 ```
 
 Running
