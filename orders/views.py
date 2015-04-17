@@ -18,9 +18,10 @@ def order(request):
                 crust=form.cleaned_data["crust"],
                 order=Order.objects.get(open=True)
             ).save()
-        return render(request, 'enjoy.html', {'form': form})
-
-    # GET form
+            return render(request, 'enjoy.html', {'form': form})
+        else:
+            return render(request, 'order.html', {'form': form})
+    # GET
     form = PizzaOrderForm()
 
     return render(request, 'order.html', {'form': form})
