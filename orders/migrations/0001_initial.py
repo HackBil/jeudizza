@@ -11,14 +11,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Bilien',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('first_name', models.CharField(max_length=64)),
-                ('last_name', models.CharField(max_length=64)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Company',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -26,10 +18,28 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Crust',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=64)),
+                ('overprice', models.FloatField(default=0)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Debil',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('first_name', models.CharField(max_length=64)),
+                ('last_name', models.CharField(max_length=64)),
+                ('company', models.ForeignKey(to='orders.Company', null=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Order',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date', models.DateField()),
+                ('open', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
@@ -42,10 +52,11 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='PizzaBilienOrder',
+            name='PizzaOrder',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('bilien', models.ForeignKey(to='orders.Bilien')),
+                ('crust', models.ForeignKey(to='orders.Crust')),
+                ('debil', models.ForeignKey(to='orders.Debil')),
                 ('order', models.ForeignKey(to='orders.Order')),
                 ('pizza', models.ForeignKey(to='orders.Pizza')),
             ],
@@ -53,11 +64,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='order',
             name='pizza_set',
-            field=models.ManyToManyField(to='orders.Pizza', through='orders.PizzaBilienOrder'),
-        ),
-        migrations.AddField(
-            model_name='bilien',
-            name='company',
-            field=models.ForeignKey(to='orders.Company', null=True),
+            field=models.ManyToManyField(to='orders.Pizza', through='orders.PizzaOrder'),
         ),
     ]

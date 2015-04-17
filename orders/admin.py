@@ -1,5 +1,5 @@
 from django.contrib import admin
-from orders.models import Company, Bilien, Pizza, Order, PizzaBilienOrder
+from orders.models import Company, Debil, Pizza, Crust, Order, PizzaOrder
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -8,10 +8,16 @@ class CompanyAdmin(admin.ModelAdmin):
 admin.site.register(Company, CompanyAdmin)
 
 
-class BilienAdmin(admin.ModelAdmin):
+class CrustAdmin(admin.ModelAdmin):
+    list_display = ('name', 'overprice')
+
+admin.site.register(Crust, CrustAdmin)
+
+
+class DebilAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'company')
 
-admin.site.register(Bilien, BilienAdmin)
+admin.site.register(Debil, DebilAdmin)
 
 
 class PizzaAdmin(admin.ModelAdmin):
@@ -20,13 +26,13 @@ class PizzaAdmin(admin.ModelAdmin):
 admin.site.register(Pizza, PizzaAdmin)
 
 
-class PizzaBilienOrderInline(admin.TabularInline):
-    model = PizzaBilienOrder
+class PizzaOrderInline(admin.TabularInline):
+    model = PizzaOrder
     extra = 3
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('date',)
-    inlines = (PizzaBilienOrderInline,)
+    list_display = ('date', 'open')
+    inlines = (PizzaOrderInline,)
 
 admin.site.register(Order, OrderAdmin)
