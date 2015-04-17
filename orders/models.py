@@ -40,8 +40,13 @@ class Order(models.Model):
     date = models.DateField()
     open = models.BooleanField(default=True)
 
+    def get_pizza_order(self):
+        return PizzaOrder.objects.filter(order=self)
+
     def get_total_price(self):
-        total = sum([pizza.get_price for pizza in self.pizza_set.all()])
+        pizza_orders = self.get_pizza_order()
+
+        total = sum([pizza.get_price() for pizza in pizza_orders])
         return total
 
 

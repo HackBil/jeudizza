@@ -1,0 +1,10 @@
+{% for order in last_orders %}
+<h2>Jeudizza {{ order.date|date:"d F Y" }} - {% if order.open %}Ouverte{% else %}Fermée{% endif %}
+</h2>
+<ul>
+{% for pizza_order in order.get_pizza_order %}
+<li> {{ pizza_order.pizza.name }} - pate {{ pizza_order.crust.name }} - {{ pizza_order.get_price|floatformat }}&euro; - {{ pizza_order.debil }}</li>
+{% endfor %}
+</ul>
+<p>Prix total: {{ order.get_total_price|floatformat }}&euro;</p>
+{% endfor %}
