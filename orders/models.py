@@ -10,7 +10,7 @@ class Company(models.Model):
 
 
 class Debil(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64)
     company = models.ForeignKey(Company, null=True)
 
     def __unicode__(self):
