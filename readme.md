@@ -4,7 +4,6 @@ Jeudizza
 Setup 
 -----
 > This setup is mainly intended for the engine-coder.
-> If you've never played a Kingdoms game before, you should really try it. Although the code is heavily documented and pretty simple to understand, core concepts of the games lies in its scripting engine; making this engine-code quite abstract to starts with.
 
 * `git clone git@github.com:HackBil/jeudizza.git` : retrieve the repo
 * `cd jeudizza`
