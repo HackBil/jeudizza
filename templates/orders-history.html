@@ -1,23 +1,26 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>JEUDIZZA</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="content-language" content="fr" />
+{% extends "base.html" %}
+{% load static %}
 
-        <link href="{% static 'css/empty.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        {% for order in last_orders %}
-        <h2>Jeudizza {{ order.date|date:"d F Y" }} - {% if order.open %}Ouverte{% else %}Fermée{% endif %}</h2>
-        <ul>
-            {% for pizza_order in order.get_pizza_order %}
-            <li> {{ pizza_order.pizza.name }} - pate {{ pizza_order.crust.name }} - {{ pizza_order.get_price|floatformat }}&euro; - {{ pizza_order.debil }}</li>
-            {% endfor %}
-        </ul>
-        <p>Prix total: {{ order.get_total_price|floatformat }}&euro;</p>
-        {% endfor %}
-    </body>
-</html>
+{% block content %}
+
+<div class="row">
+    
+    {% for order in last_orders %}
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Jeudizza {{ order.date|date:"d F Y" }} - {% if order.open %}Ouverte{% else %}Fermée{% endif %}</h2>
+                <ul class="list-group">
+                    {% for pizza_order in order.get_pizza_order %}
+                    <li class="list-group-item"> {{ pizza_order.pizza.name }} - pate {{ pizza_order.crust.name }} - {{ pizza_order.get_price|floatformat }}&euro; - {{ pizza_order.debil }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="well">Prix total: {{ order.get_total_price|floatformat }}&euro;</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}
 

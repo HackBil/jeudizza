@@ -1,25 +1,27 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>JEUDIZZA</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="content-language" content="fr" />
+{% extends "base.html" %}
+{% load static %}
 
-        <link href="{% static 'css/empty.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <p>Le détail de la carte est <a href="http://pizza.dominos.fr/la-carte/nos-pizzas" target="_blank">ici</a> !</p>
-
-        <form action="./" method="post">
-          {% csrf_token %}
-          {% for field in form %}
-            <div>
-              {{ field.errors }}
-              {{ field.label_tag }} {{ field }}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <p><a href="http://pizza.dominos.fr/la-carte/nos-pizzas" title="la carte" class="btn btn-info" target="_blank">Détail de la carte</a></p>
+        <p class="small text-muted">La pizza est à 5 ou 6€, <a href="http://vidclust.com/app" title="vidclust">l'appli Vidclust</a> est toujours gratuite. Déjà plus de 10000 téléchargements.</p>
+    </div>
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+            <div class="panel-body">
+              <form action="./" method="post">
+                  {% csrf_token %}
+                  {% for field in form %}
+                  <div class="form-group">
+                      {{ field.errors }}
+                      {{ field.label_tag }} {{ field }}
+                  </div>
+                  {% endfor %}
+                  <input type="submit" class="btn btn-default" value="JEUDIZZA" />
+              </form>
             </div>
-            {% endfor %}
-          <input type="submit" value="JEUDIZZA" />
-        </form>
-    </body>
-</html>
+          </div>
+    </div>
+</div>
+{% endblock content %}

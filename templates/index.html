@@ -1,21 +1,17 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>JEUDIZZA</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="content-language" content="fr" />
+{% extends "base.html" %}
+{% load static %}
 
-        <link href="{% static 'css/empty.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <p>Il y a déjà eu {{ pizza_count }} pizzas mangées par des déBILs</p>
+{% block content %}
 
-        <p>Viens commander la tienne <a href="/order">ici</a></p>
-
-
-        <p>Pour voir les commandes, <a href="/orders-history">clic ici</a></p>
-
-    </body>
-</html>
+<div class="row">
+    
+    
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="jumbotron text-center">
+            <h1>{{ pizza_count }}</h1>
+            Il y a déjà eu {{ pizza_count }} pizzas mangées par des déBILs
+        </div>
+    </div>
+<div>
+{% endblock content %}
 
