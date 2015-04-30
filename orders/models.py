@@ -62,7 +62,7 @@ class PizzaOrder(models.Model):
     pizza = models.ForeignKey(Pizza)
     debil = models.ForeignKey(Debil, verbose_name=u'déBIL')
     order = models.ForeignKey(Order)
-    crust = models.ForeignKey(Crust, verbose_name=u'croute')
+    crust = models.ForeignKey(Crust, verbose_name=u'pâte')
 
     def get_price(self):
         return self.pizza.price + self.crust.overprice
