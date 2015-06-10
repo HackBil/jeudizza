@@ -28,5 +28,5 @@ def order(request):
 
 
 def orders_history(request):
-    last_orders = list(Order.objects.all().order_by('-date', 'pizza__name'))[-5:]
+    last_orders = list(Order.objects.all().order_by('-date'))[:5]
     return render(request, 'orders-history.html', locals())
