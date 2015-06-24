@@ -10,4 +10,4 @@ INVITED_PREFIX = u"Invité(e) de"
 @receiver(post_save, sender=Company)
 def create_invited_debil(sender, instance, created, **kwargs):
     if created:
-        Debil(name=(u"%s %s" % INVITED_PREFIX, instance.name), company=instance).save()
+        Debil(name=u"%s %s" % (INVITED_PREFIX, instance.name), company=instance).save()
