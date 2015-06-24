@@ -66,3 +66,6 @@ class PizzaOrder(models.Model):
 
     def get_price(self):
         return self.pizza.price + self.crust.overprice
+
+
+from orders.signals import *

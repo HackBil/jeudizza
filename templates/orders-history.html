@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="row">
-    
+
     {% for order in last_orders %}
     <div class="col-sm-12">
         <div class="panel panel-default">
@@ -16,6 +16,7 @@
                     {% endfor %}
                 </ul>
                 <div class="well">Prix total: {{ order.get_total_price|floatformat }}&euro;</div>
+                <div class="well"><a href="/who-work-today" title="Qui bosse aujourd'hui">Random ceux qui bossent</a></div>
             </div>
         </div>
     </div>
