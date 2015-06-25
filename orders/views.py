@@ -8,6 +8,9 @@ from orders.signals import INVITED_PREFIX
 import random
 
 
+WALKERS = 2
+
+
 def home(request):
     pizza_count = PizzaOrder.objects.count()
     return render(request, 'index.html', locals())
@@ -40,16 +43,18 @@ def orders_history(request):
 def who_work_today(request):
     last_order = Order.objects.all().order_by('pk').last()
 
-    orderers = list(Debil.objects.exclude(name__startswith=INVITED_PREFIX).filter(pizzaorder__order=last_order))
+    eligible_walkers = list(Debil.objects.filter(pizzaorder__order=last_order))
+
+    # Pick walkers
+    walkers = []
+    for x in range(0, WALKERS):
+        index = random.randrange(len(eligible_walkers))
+        walkers.append(eligible_walkers.pop(index))
+
+    eligible_commanders = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(name__startswith=INVITED_PREFIX).exclude(name__in=[walker.name for walker in walkers]))
 
     # Pick the commander
-    index = random.randrange(len(orderers))
-    commander = orderers.pop(index)
-
-    # Pick two walkers
-    walkers = []
-    for x in range(0, 2):
-        index = random.randrange(len(orderers))
-        walkers.append(orderers.pop(index))
+    index = random.randrange(len(eligible_commanders))
+    commander = eligible_commanders.pop(index)
 
     return render(request, 'who-work-today.html', locals())
