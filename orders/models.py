@@ -28,7 +28,7 @@ class Crust(models.Model):
     overprice = models.FloatField(default=0)
 
     def __unicode__(self):
-        if overprice == 0:
+        if self.overprice == 0:
             return self.name
         else:
             return u"%s (+%g€)" % (self.name, self.overprice)

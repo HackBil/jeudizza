@@ -16,7 +16,9 @@
                     {% endfor %}
                 </ul>
                 <div class="well">Prix total: {{ order.get_total_price|floatformat }}&euro;</div>
+                {% if forloop.first %}
                 <div class="well"><a href="/who-work-today" title="Qui bosse aujourd'hui">Random ceux qui bossent</a></div>
+                {% endif %}
             </div>
         </div>
     </div>
