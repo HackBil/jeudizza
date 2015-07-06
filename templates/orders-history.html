@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <h2>Jeudizza {{ order.date|date:"d F Y" }} - {% if order.open %}Ouverte{% else %}Fermée{% endif %}</h2>
                 <ul class="list-group">
-                    {% for pizza_order in order.get_pizza_order %}
+                    {% for pizza_order in order.pizzaorder_set.all %}
                     <li class="list-group-item"> {{ pizza_order.pizza.name }} - pate {{ pizza_order.crust.name }} - {{ pizza_order.get_price|floatformat }}&euro; - {{ pizza_order.debil }}</li>
                     {% endfor %}
                 </ul>

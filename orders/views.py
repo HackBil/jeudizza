@@ -36,8 +36,26 @@ def order(request):
 
 
 def orders_history(request):
+    # last 5 orders
     last_orders = list(Order.objects.all().order_by('-date'))[:5]
-    return render(request, 'orders-history.html', locals())
+
+    to_return = []
+
+    for order in last_orders:
+        pizzaOrders = order.pizzaorder_set.all()
+
+
+
+
+
+    # @output : list of last_orders that contain a list of dict
+    # {
+    #   number: int,
+    #   pizza_with_crust: pizzaOrder.get_verbose_description()
+    # }
+
+    # TODO: update view
+    return render(request, 'orders-history.html', {"last_orders": last_orders})
 
 
 def who_work_today(request):
