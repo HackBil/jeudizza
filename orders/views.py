@@ -43,6 +43,8 @@ def orders_history(request):
 def who_work_today(request):
     last_order = Order.objects.all().order_by('pk').last()
 
+    random.seed(last_order)
+
     eligible_walkers = list(Debil.objects.filter(pizzaorder__order=last_order))
 
     # Pick walkers
