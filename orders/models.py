@@ -51,11 +51,8 @@ class Order(models.Model):
     date = models.DateField()
     open = models.BooleanField(default=True)
 
-    def get_pizza_order(self):
-        return PizzaOrder.objects.filter(order=self)
-
     def get_total_price(self):
-        pizza_orders = self.get_pizza_order()
+        pizza_orders = self.pizzaorder_set.all()
 
         total = sum([pizza.get_price() for pizza in pizza_orders])
         return total
@@ -69,6 +66,9 @@ class PizzaOrder(models.Model):
 
     def get_price(self):
         return self.pizza.price + self.crust.overprice
+
+    def get_verbose_description(self):
+        return "%s - pate %s " % (self.pizza.name, self.crust.name)
 
 
 from orders.signals import *
