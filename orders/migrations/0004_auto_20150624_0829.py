@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.db import models, migrations
 
-INVITED_PREFIX = u"Invité(e) de"
+INVITED_PREFIX = "Invité(e) de"
 
 
 def create_invited_people(apps, schema_editor):
@@ -12,7 +12,7 @@ def create_invited_people(apps, schema_editor):
     Debil = apps.get_model("orders", "Debil")
     Company = apps.get_model("orders", "Company")
     for company in Company.objects.all():
-        Debil(name=u"%s %s" % (INVITED_PREFIX, company.name), company=company).save()
+        Debil(name="%s %s" % (INVITED_PREFIX, company.name), company=company).save()
 
 
 class Migration(migrations.Migration):

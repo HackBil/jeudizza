@@ -1,2 +1,2 @@
-django==1.8.2
+django==1.8.4
 docutils==0.12

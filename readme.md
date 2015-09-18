@@ -7,7 +7,7 @@ Setup
 
 * `git clone git@github.com:HackBil/jeudizza.git` : retrieve the repo
 * `cd jeudizza`
-* `virtualenv --no-site-packages .v_env` : create a virtual-env for python code
+* `virtualenv -p python3 --no-site-packages .v_env` : create a virtual-env for python code
 * `source .v_env/bin/activate` : activate the v_env.
 * `pip install -r requirements.txt` : install all requirements
 * `./manage.py loaddata seed.json` : seed DB with data

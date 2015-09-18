@@ -31,7 +31,7 @@ class Crust(models.Model):
         if self.overprice == 0:
             return self.name
         else:
-            return u"%s (+%g€)" % (self.name, self.overprice)
+            return "%s (+%g€)" % (self.name, self.overprice)
 
 
 class Pizza(models.Model):
@@ -43,7 +43,7 @@ class Pizza(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return u"%s (%g€)" % (self.name, self.price)
+        return "%s (%g€)" % (self.name, self.price)
 
 
 class Order(models.Model):
@@ -60,9 +60,9 @@ class Order(models.Model):
 
 class PizzaOrder(models.Model):
     pizza = models.ForeignKey(Pizza)
-    debil = models.ForeignKey(Debil, verbose_name=u'déBIL')
+    debil = models.ForeignKey(Debil, verbose_name='déBIL')
     order = models.ForeignKey(Order)
-    crust = models.ForeignKey(Crust, verbose_name=u'pâte')
+    crust = models.ForeignKey(Crust, verbose_name='pâte')
 
     def get_price(self):
         return self.pizza.price + self.crust.overprice
