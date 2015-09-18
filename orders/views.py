@@ -4,6 +4,7 @@ from orders.models import Order, PizzaOrder, Debil
 from orders.forms import PizzaOrderForm
 from orders.signals import INVITED_PREFIX
 
+from operator import itemgetter
 import random
 
 WALKERS = 2
@@ -62,7 +63,7 @@ def orders_history(request):
                     "price": pizza_order.get_price() * quantity,
                     "debil_list": debil_list
                 })
-
+                formatted_order = sorted(formatted_order, key=itemgetter('quantity'), reverse=True)
         to_return.append({"content": formatted_order,
                           "info": order})
 
