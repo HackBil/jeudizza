@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.contrib import admin
 from orders.models import Company, Debil, Pizza, Crust, Order, PizzaOrder
 

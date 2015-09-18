@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from orders.models import Order, PizzaOrder, Debil
 from orders.forms import PizzaOrderForm
