@@ -7,7 +7,7 @@ class Company(models.Model):
     class Meta:
         ordering = ['name']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -18,7 +18,7 @@ class Debil(models.Model):
     class Meta:
         ordering = ['name']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -26,7 +26,7 @@ class Crust(models.Model):
     name = models.CharField(max_length=64, unique=True)
     overprice = models.FloatField(default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.overprice == 0:
             return self.name
         else:
@@ -41,7 +41,7 @@ class Pizza(models.Model):
     class Meta:
         ordering = ['name']
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%g€)" % (self.name, self.price)
 
 
