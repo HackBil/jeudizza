@@ -4,13 +4,72 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-md-8">
         <div class="jumbotron text-center">
-            <h1>{{ pizza_count }}</h1>
-            Il y a déjà eu {{ pizza_count }} pizzas mangées par des déBILs
+            <h1>{{ pizza_count }} pizzas</h1>
+            Pour un total de {{ total_money.sum|floatformat }} € (ouch) soit <code class="grayscale joke" title="Impossible de diviser {{ total_money.sum|floatformat }} € par 0 € !">ZeroDivisionError</code> mois de salaire d'entrepreneur moyen
         </div>
+        <div class="jumbotron">
+            <h3 class="text-center">Le top des pizzas (pour mieux choisir)</h3>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Pizza</th>
+                  <th class="text-right">Nombre de mangeages</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for pizza in top5_pizzas %}
+                <tr>
+                  <td>{{ pizza.pizza__name }}</td>
+                  <td class="text-right">{{ pizza.count }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <h3 class="text-center">et les meilleures pâtes</h3>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Pâte</th>
+                  <th class="text-right">DéBIL qui aiment cette pâte</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for crust in top_crusts %}
+                <tr>
+                  <td>{{ crust.crust__name }}</td>
+                  <td class="text-right">{% widthratio crust.count pizza_count 100 %}%</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
+        <div class="jumbotron">
+            <h3 class="text-center">Le top des DéBILs (pas de quoi être fier)</h3>
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>DéBIL</th>
+                  <th>Pizza(s) favorite(s)</th>
+                  <th class="text-right">Quantité de gras</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for debil in top5_debils %}
+                <tr>
+                  <td>{{ debil.debil__name }}</td>
+                  <td>{{ debil.favorite }}</td>
+                  <td class="text-right">{{ debil.count }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+
     </div>
-    <div class="col-sm-6">
+    <div class="col-md-4">
         <img src="/static/img/matthieu.jpg" width="100%"/>
     </div>
 <div>

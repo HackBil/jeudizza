@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Count, Sum
 from orders.models import Order, PizzaOrder, Debil
 from orders.forms import PizzaOrderForm
 from orders.signals import INVITED_PREFIX
@@ -11,6 +12,24 @@ WALKERS = 2
 
 def home(request):
     pizza_count = PizzaOrder.objects.count()
+    top5_pizzas = PizzaOrder.objects.values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")[:5]
+    top5_debils = PizzaOrder.objects.values('debil__name').exclude(debil__name__startswith=INVITED_PREFIX).annotate(count=Count('debil__name')).order_by("-count")[:10]
+    top_crusts = PizzaOrder.objects.values('crust__name').annotate(count=Count('crust__name')).order_by("-count")
+    total_money = PizzaOrder.objects.all().aggregate(sum=Sum('pizza__price'))
+
+    for debil in top5_debils:
+        pizzas = PizzaOrder.objects.filter(debil__name=debil['debil__name']).values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")
+        favorite_pizzas = [pizza['pizza__name'] for pizza in pizzas if pizzas[0]['count'] == pizza['count']][:3]
+        comment = str(pizzas[0]['count'])
+        debil['favorite'] = ''
+        if len(favorite_pizzas) > 1:
+            comment += ' de chaque'
+            debil['favorite'] += ', '.join(favorite_pizzas[:-1]) + ' et '
+        else:
+            comment += ' pizzas'
+        debil['favorite'] += favorite_pizzas[-1]
+        debil['favorite'] += ' (' + comment + ')'
+
     return render(request, 'index.html', locals())
 
 
