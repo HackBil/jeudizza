@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+  {% if saved %}
+  <div class="alert alert-success">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> La paiement a bien été enregistré !
+  </div>
+  {% endif %}
+  <div class="col-sm-12 col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form action="../pay_order/" method="post">
+          {% csrf_token %}
+          <select name="debil" class="form-control">
+          <option value="-1" selected disabled>Qui ?</option>
+           <option value="" style="display:none;"></option>
+            {% for debil in debils %}
+            <option value="{{ debil.pk }}">{{ debil.name }}</option>
+            {% endfor %}
+          </select>
+          <select name="order" class="form-control">
+            {% for order in last_orders %}
+            <option value="{{ order.pk }}">{{ order.date|date:"d F Y"}} ({{order.get_total_price|floatformat}}€)</option>
+            {% endfor %}
+          </select>
+          <input type="submit" class="btn btn-default" value="Enregister paiement" />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form action="../pay_debil/" method="post" class="form-inline">
+          {% csrf_token %}
+          <select name="giver" class="form-control">
+            <option value="-1" selected disabled>Qui</option>
+            {% for debil in debils %}
+            <option value="{{ debil.pk }}">{{ debil.name }}</option>
+            {% endfor %}
+          </select>
+          <div class="input-group">
+            <input type="number" name="price" placeholder="donne" class="form-control">
+            <div class="input-group-addon">&euro;</div>
+          </div>
+
+          <select name="taker" class="form-control">
+            <option value="-1" selected disabled>à qui ?</option>
+            {% for debil in debils %}
+            <option value="{{ debil.pk }}">{{ debil.name }}</option>
+            {% endfor %}
+          </select>
+          <input type="submit" class="btn btn-default" value="Donner les sous" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

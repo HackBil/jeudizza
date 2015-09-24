@@ -93,3 +93,11 @@ def who_work_today(request):
     commander = eligible_commanders.pop(index)
 
     return render(request, 'who-work-today.html', locals())
+
+
+def argent(request):
+    debils = Debil.objects.all()
+
+
+
+    return render(request, 'argent.html', locals())
