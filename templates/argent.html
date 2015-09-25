@@ -19,7 +19,7 @@
                     <tbody>
                         {% for debil in debils %}
                         <tr>
-                            <td class="
+                            <td class="sorted
                             {% if debil.get_solde < 0 %}
                                 text-danger
                             {% elif debil.get_solde > 0 %}
@@ -28,8 +28,8 @@
                                 text-muted
                             {% endif %}
                             " data-value="{{ debil.get_solde}}" >{{ debil.get_solde|floatformat }} &euro;</td>
-                            <td>{{ debil.name }}</td>
-                            <td>{{ debil.company.name }}</td>
+                            <td class="sorted">{{ debil.name }}</td>
+                            <td class="sorted">{{ debil.company.name }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -38,10 +38,8 @@
         </div>
     </div>
 <div>
-<div>
-    <link href="{% static 'css/bootstrap-sortable.css' %}" rel="stylesheet">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/bootstrap-sortable.js' %}"></script>
-</div>
+<link href="{% static 'css/bootstrap-sortable.css' %}" rel="stylesheet">
+
+<script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-sortable.js' %}"></script>
 {% endblock content %}
