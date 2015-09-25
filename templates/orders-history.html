@@ -4,40 +4,41 @@
 {% block content %}
 
 <div class="row">
-
     {% for order in last_orders %}
     <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h2>Jeudizza {{ order.info.date|date:"d F Y" }} - {% if order.info.open %}Ouverte{% else %}Fermée{% endif %}</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Quantité</th>
-                            <th>Détail</th>
-                            <th>Prix</th>
-                            <th>DéBIL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for pizza_order in order.content %}
-                        <tr>
-                            <td>{{ pizza_order.quantity }}</td>
-                            <td>{{ pizza_order.pizza.get_verbose_description }}</td>
-                            <td>{{ pizza_order.price|floatformat }}&euro;</td>
-                            <td>{{ pizza_order.debil_list|join:", "}}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="well">Prix total: {{ order.info.get_total_price|floatformat }}&euro;</div>
-                {% if forloop.first %}
-                <div class="well"><a href="/who-work-today" title="Qui bosse aujourd'hui">Random ceux qui bossent</a></div>
-                {% endif %}
+        <div class="panel panel-default {% if order.info.open %}panel-success{% endif %}">
+            <div class="panel-heading clearfix">
+                <h3 class="pull-left">Jeudizza du {{ order.info.date|date:"d F Y" }}</h3>
+                <h3 class="pull-right">{{ order.info.get_total_price|floatformat }}&euro;</h3>
+
             </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Quantité</th>
+                        <th>Détail</th>
+                        <th>Prix</th>
+                        <th>DéBILs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pizza_order in order.content %}
+                    <tr>
+                        <td>{{ pizza_order.quantity }}</td>
+                        <td>{{ pizza_order.pizza.get_verbose_description }}</td>
+                        <td>{{ pizza_order.price|floatformat }}&euro;</td>
+                        <td>{{ pizza_order.debil_list|join:", "}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if forloop.first %}
+            <div class="panel-footer">
+                <a href="/who-work-today" title="Qui bosse aujourd'hui">Random ceux qui bossent</a>
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
-
 </div>
 {% endblock content %}
