@@ -52,16 +52,16 @@
               <thead>
                 <tr>
                   <th>DéBIL</th>
-                  <th>Pizza(s) favorite(s)</th>
-                  <th class="text-right">Quantité de gras</th>
+                  <th class="text-right">Sa ou ses pizza(s) favorite(s)</th>
+                  <th class="text-right">Total</th>
                 </tr>
               </thead>
               <tbody>
               {% for debil in top5_debils %}
                 <tr>
                   <td>{{ debil.debil__name }}</td>
-                  <td>{{ debil.favorite }}</td>
-                  <td class="text-right">{{ debil.count }}</td>
+                  <td class="text-right">{{ debil.favorite }}</td>
+                  <td class="text-right">{{ debil.comment }}</td>
                 </tr>
               {% endfor %}
               </tbody>
