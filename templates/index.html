@@ -5,11 +5,11 @@
 
 <div class="row">
     <div class="col-md-8">
-        <div class="jumbotron text-center">
+        <div class="jumbotron jumbotron-pizza text-center">
             <h1>{{ pizza_count }} pizzas</h1>
             Pour un total de {{ total_money.sum|floatformat }} € (ouch) soit <code class="grayscale joke" title="Impossible de diviser {{ total_money.sum|floatformat }} € par 0 € !">ZeroDivisionError</code> mois de salaire d'entrepreneur moyen
         </div>
-        <div class="jumbotron">
+        <div class="jumbotron jumbotron-pizza">
             <h3 class="text-center">Le top des pizzas (pour mieux choisir)</h3>
             <table class="table table-condensed">
               <thead>
@@ -27,12 +27,12 @@
               {% endfor %}
               </tbody>
             </table>
-            <h3 class="text-center">et les meilleures pâtes</h3>
+            <h3 class="text-center">Les meilleures pâtes</h3>
             <table class="table table-condensed">
               <thead>
                 <tr>
                   <th>Pâte</th>
-                  <th class="text-right">DéBIL qui aiment cette pâte</th>
+                  <th class="text-right">DéBILs qui aiment cette pâte</th>
                 </tr>
               </thead>
               <tbody>
@@ -44,9 +44,13 @@
               {% endfor %}
               </tbody>
             </table>
+            <h3 class="text-center">Facts</h3>
+            {% for comment in crust_comments %}
+              <p>{{ comment }}</p>
+            {% endfor %}
         </div>
 
-        <div class="jumbotron">
+        <div class="jumbotron jumbotron-pizza">
             <h3 class="text-center">Le top des DéBILs (pas de quoi être fier)</h3>
             <table class="table table-condensed">
               <thead>

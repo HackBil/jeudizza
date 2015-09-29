@@ -20,3 +20,7 @@ code.grayscale {
 .joke:hover {
   cursor: help;
 }
+
+.jumbotron-pizza p {
+  font-size: 1em;
+}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count, Sum
-from orders.models import Order, PizzaOrder, Debil
+from orders.models import Order, PizzaOrder, Debil, Pizza
 from orders.forms import PizzaOrderForm
 from orders.signals import INVITED_PREFIX
 
@@ -31,8 +31,34 @@ def home(request):
         else:
             if len(favorite_pizzas) > 1:
                 debil['favorite'] += ', '.join(favorite_pizzas[:-1]) + ' et '
-            debil['favorite'] += favorite_pizzas[-1]
+            if len(favorite_pizzas):
+                debil['favorite'] += favorite_pizzas[-1]
         debil['comment'] = str(debil['count']) + ' pizzas'
+
+
+    crust_comments = []
+    crusts = [
+        {
+            'name': 'Classique',
+            'message': 'sont des vrais qui ont plus tendance à prendre des pizzas avec pâte classique.'
+        },
+        {
+            'name': 'Fine',
+            'message': 'sont des faibles qui ont plus tendance à prendre des pizzas avec pâte fine.'
+        }
+    ]
+    for crust in crusts:
+        top_crust = PizzaOrder.objects.filter(crust__name=crust['name']).values('debil__name').exclude(debil__name__startswith=INVITED_PREFIX).annotate(count=Count('debil__name')).order_by('-count')[:5]
+        top_crust = [pizza['debil__name'] for pizza in top_crust]
+
+        crust_comment = ''
+        if len(top_crust) > 1:
+            crust_comment += ', '.join(top_crust[:-1]) + ' et '
+        if len(top_crust):
+            crust_comment += top_crust[-1]
+        if crust_comment:
+            crust_comment += ' ' + crust['message']
+        crust_comments.append(crust_comment)
 
     return render(request, 'index.html', locals())
 
