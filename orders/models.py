@@ -15,6 +15,7 @@ class Company(models.Model):
 class Debil(models.Model):
     name = models.CharField(max_length=64)
     company = models.ForeignKey(Company, null=True)
+    disabled = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['name']
