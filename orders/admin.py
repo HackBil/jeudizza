@@ -18,10 +18,17 @@ admin.site.register(Crust, CrustAdmin)
 
 
 class DebilAdmin(admin.ModelAdmin):
-    list_display = ('name', 'company', 'solde')
+    list_display = ('name', 'company', 'solde', 'disabled')
+    actions = ('disable',)
 
     def solde(self, obj):
         return obj.get_solde()
+
+    def disable(self, request, queryset):
+        for debil in queryset:
+            debil.disabled = True
+            debil.save()
+        return
 
 admin.site.register(Debil, DebilAdmin)
 

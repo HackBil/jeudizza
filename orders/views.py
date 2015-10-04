@@ -96,8 +96,5 @@ def who_work_today(request):
 
 
 def argent(request):
-    debils = Debil.objects.all()
-
-
-
+    debils = Debil.objects.filter(disabled=False)
     return render(request, 'argent.html', locals())
