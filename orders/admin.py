@@ -79,7 +79,7 @@ def pay_order(request):
         Payment(debil=debil, price=order.get_total_price()).save()
         saved = True
 
-    debils = Debil.objects.all()
+    debils = Debil.objects.filter(disabled=False)
     last_orders = list(Order.objects.all().order_by('-date'))[:5]
 
     return render(

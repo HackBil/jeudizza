@@ -26,13 +26,14 @@
         <form action="../pay_order/" method="post">
           {% csrf_token %}
           <select name="debil" class="form-control">
-          <option value="-1" selected disabled>Qui ?</option>
-           <option value="" style="display:none;"></option>
+            <option value="-1" selected disabled>Qui ?</option>
+            <option value="" style="display:none;"></option>
             {% for debil in debils %}
             <option value="{{ debil.pk }}">{{ debil.name }}</option>
             {% endfor %}
           </select>
           <select name="order" class="form-control">
+            <option value="-1" selected disabled>Commande du</option>
             {% for order in last_orders %}
             <option value="{{ order.pk }}">{{ order.date|date:"d F Y"}} ({{order.get_total_price|floatformat}}€)</option>
             {% endfor %}
