@@ -20,9 +20,6 @@ def home(request):
     for debil in top5_debils:
         pizzas = PizzaOrder.objects.filter(debil__name=debil['debil__name']).values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")[:3]
 
-        for pizza in pizzas:
-            print()
-
         favorite_pizzas = [pizza['pizza__name'] for pizza in pizzas if int(pizza['count'] / debil['count'] * 100) > 20]
 
         debil['favorite'] = ''
@@ -34,7 +31,6 @@ def home(request):
             if len(favorite_pizzas):
                 debil['favorite'] += favorite_pizzas[-1]
         debil['comment'] = str(debil['count']) + ' pizzas'
-
 
     crust_comments = []
     crusts = [

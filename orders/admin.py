@@ -99,7 +99,6 @@ def pay_debil(request):
         giver = Debil.objects.get(pk=request.POST.get('giver'))
         taker = Debil.objects.get(pk=request.POST.get('taker'))
         price = request.POST.get('price')
-        print(price)
         Payment(debil=giver, price=float(price)).save()
         Payment(debil=taker, price=-float(price)).save()
         saved = True
