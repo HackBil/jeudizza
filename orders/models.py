@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 
 
 class Company(models.Model):
@@ -14,12 +15,18 @@ class Company(models.Model):
 class Debil(models.Model):
     name = models.CharField(max_length=64)
     company = models.ForeignKey(Company, null=True)
+    disabled = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['name']
 
     def __str__(self):
         return self.name
+
+    def get_solde(self):
+        paid = self.payment_set.aggregate(Sum('price')).get("price__sum") or 0.0
+        take = sum([pizza.get_price() for pizza in self.pizzaorder_set.all()])
+        return paid - take
 
 
 class Crust(models.Model):
@@ -68,6 +75,11 @@ class PizzaOrder(models.Model):
 
     def get_verbose_description(self):
         return "%s - pate %s " % (self.pizza.name, self.crust.name)
+
+
+class Payment(models.Model):
+    debil = models.ForeignKey(Debil, verbose_name='déBIL')
+    price = models.FloatField()
 
 
 from orders.signals import *

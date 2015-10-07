@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Soldes</h2>
+                <table class="table table-striped sortable">
+                    <thead>
+                        <tr>
+                            <th class="sorted">Solde</th>
+                            <th class="sorted">DéBIL</th>
+                            <th class="sorted">Boite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for debil in debils %}
+                        <tr>
+                            <td class="sorted
+                            {% if debil.get_solde < 0 %}
+                                text-danger
+                            {% elif debil.get_solde > 0 %}
+                                text-success
+                            {% else %}
+                                text-muted
+                            {% endif %}
+                            " data-value="{{ debil.get_solde}}" >{{ debil.get_solde|floatformat }} &euro;</td>
+                            <td class="sorted">{{ debil.name }}</td>
+                            <td class="sorted">{{ debil.company.name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<div>
+<link href="{% static 'css/bootstrap-sortable.css' %}" rel="stylesheet">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-sortable.js' %}"></script>
+{% endblock content %}
