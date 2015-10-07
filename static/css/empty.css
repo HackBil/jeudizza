@@ -1,2 +1,26 @@
 body{
+
+}
+
+.jumbotron h1,
+.jumbotron h2,
+.jumbotron h3,
+.jumbotron h4,
+.jumbotron h5,
+.jumbotron h6 {
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+code.grayscale {
+  color: #888;
+  background-color: #ddd;
+}
+
+.joke:hover {
+  cursor: help;
+}
+
+.jumbotron-pizza p {
+  font-size: 1em;
 }

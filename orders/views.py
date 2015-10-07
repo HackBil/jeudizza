@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from orders.models import Order, PizzaOrder, Debil
+from django.db.models import Count, Sum
+from orders.models import Order, PizzaOrder, Debil, Pizza
 from orders.forms import PizzaOrderForm
 from orders.signals import INVITED_PREFIX
 
@@ -11,6 +12,54 @@ WALKERS = 2
 
 def home(request):
     pizza_count = PizzaOrder.objects.count()
+    top5_pizzas = PizzaOrder.objects.values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")[:5]
+    top5_debils = PizzaOrder.objects.values('debil__name').exclude(debil__name__startswith=INVITED_PREFIX).annotate(count=Count('debil__name')).order_by("-count")[:10]
+    top_crusts = PizzaOrder.objects.values('crust__name').annotate(count=Count('crust__name')).order_by("-count")
+    total_money = PizzaOrder.objects.all().aggregate(sum=Sum('pizza__price'))
+
+    for debil in top5_debils:
+        pizzas = PizzaOrder.objects.filter(debil__name=debil['debil__name']).values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")[:3]
+
+        for pizza in pizzas:
+            print()
+
+        favorite_pizzas = [pizza['pizza__name'] for pizza in pizzas if int(pizza['count'] / debil['count'] * 100) > 20]
+
+        debil['favorite'] = ''
+        if not len(favorite_pizzas):
+            debil['favorite'] = 'Indécis ! (' + debil['debil__name'] + ' mange trop de pizzas différentes)'
+        else:
+            if len(favorite_pizzas) > 1:
+                debil['favorite'] += ', '.join(favorite_pizzas[:-1]) + ' et '
+            if len(favorite_pizzas):
+                debil['favorite'] += favorite_pizzas[-1]
+        debil['comment'] = str(debil['count']) + ' pizzas'
+
+
+    crust_comments = []
+    crusts = [
+        {
+            'name': 'Classique',
+            'message': 'sont des vrais qui ont plus tendance à prendre des pizzas avec pâte classique.'
+        },
+        {
+            'name': 'Fine',
+            'message': 'sont des faibles qui ont plus tendance à prendre des pizzas avec pâte fine.'
+        }
+    ]
+    for crust in crusts:
+        top_crust = PizzaOrder.objects.filter(crust__name=crust['name']).values('debil__name').exclude(debil__name__startswith=INVITED_PREFIX).annotate(count=Count('debil__name')).order_by('-count')[:5]
+        top_crust = [pizza['debil__name'] for pizza in top_crust]
+
+        crust_comment = ''
+        if len(top_crust) > 1:
+            crust_comment += ', '.join(top_crust[:-1]) + ' et '
+        if len(top_crust):
+            crust_comment += top_crust[-1]
+        if crust_comment:
+            crust_comment += ' ' + crust['message']
+        crust_comments.append(crust_comment)
+
     return render(request, 'index.html', locals())
 
 
