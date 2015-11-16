@@ -29,3 +29,9 @@ Running
 -------
 * `./manage.py runserver`
 * Access `http://127.0.0.1:8000` with your browser. The admin is on `http://127.0.0.1:8000/admin/`.
+
+
+Add crontab
+--------
+* `crontab -e`
+* `59 23 * * 4 source VIRTUAL_ENV_PATH && python PROJECT_PATH/manage.py runcrons`
