@@ -1,23 +1,20 @@
 from django_cron import CronJobBase, Schedule
-from oders.models import Order
+from orders.models import Order
 import datetime
 
 
-JEUDI = 3
-
-
-def next_weekday(weekday):
-    d = datetime.now()
-    days_ahead = weekday - d.weekday()
+def next_thursday():
+    d = datetime.datetime.now()
+    days_ahead = 3 - d.weekday()  # 3=thursday
     if days_ahead <= 0:  # Target day already happened this week
         days_ahead += 7
     return d + datetime.timedelta(days_ahead)
 
 
 class Jeudi(CronJobBase):
-    RUN_AT_TIMES = ['23:55']
+    RUN_EVERY_MINS = 120
 
-    schedule = Schedule(run_at_times=RUN_AT_TIMES)
+    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'orders.jeudi'    # a unique code
 
     def do(self):
@@ -25,4 +22,5 @@ class Jeudi(CronJobBase):
         last_order.open = False
         last_order.save()
 
-        Order(date=next_weekday(JEUDI)).save()
+        o = Order(date=next_thursday())
+        o.save()
