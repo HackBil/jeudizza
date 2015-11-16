@@ -117,25 +117,23 @@ def orders_history(request):
 def who_work_today(request):
     last_order = Order.objects.all().order_by('pk').last()
 
+    availabe_people = last_order.pizzaorder_set.all().values_list('debil').distinct().count()
+    if availabe_people < 3:
+        return render(request, 'who-work-today.html', {'not_enough_people': True})
+
     random.seed(last_order)
 
-    eligible_walkers = list(Debil.objects.filter(pizzaorder__order=last_order))
+    # Pick the commander
+    eligible_commanders = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(name__startswith=INVITED_PREFIX))
+    commander = eligible_commanders[random.randint(0, len(eligible_commanders) - 1)]
+
+    eligible_walkers = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(pk=commander.pk).distinct())
 
     # Pick walkers
     walkers = []
     for x in range(0, WALKERS):
         index = random.randrange(len(eligible_walkers))
         walkers.append(eligible_walkers.pop(index))
-
-    eligible_commanders = list(
-        Debil.objects
-        .filter(pizzaorder__order=last_order)
-        .exclude(name__startswith=INVITED_PREFIX)
-        .exclude(name__in=[walker.name for walker in walkers])
-    )
-    # Pick the commander
-    index = random.randrange(len(eligible_commanders))
-    commander = eligible_commanders.pop(index)
 
     return render(request, 'who-work-today.html', locals())
 

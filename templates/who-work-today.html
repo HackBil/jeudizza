@@ -4,10 +4,15 @@
 {% block content %}
 
 <div class="row">
-
     <div class="col-sm-12">
         <div class="panel panel-default">
+            {% if not_enough_people %}
              <div class="panel-body">
+                <p>Vous n'êtes pas assez nombreux pour pouvoir définir automatiquement qui fait quoi.</p>
+                <p>Débrouillez-vous entre vous !</p>
+            </div>
+            {%else %}
+            <div class="panel-body">
                 <h2>Commande :</h2>
                 <ul class="list-group">
                     <li class="list-group-item"> {{ commander.name }}</li>
@@ -21,8 +26,8 @@
                     {% endfor %}
                 </ul>
             </div>
+            {% endif %}
         </div>
     </div>
-
 </div>
 {% endblock content %}
