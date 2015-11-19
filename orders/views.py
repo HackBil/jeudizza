@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Count, Sum
-from orders.models import Order, PizzaOrder, Debil, Pizza
+from orders.models import Order, PizzaOrder, Debil
 from orders.forms import PizzaOrderForm
 from orders.signals import INVITED_PREFIX
 

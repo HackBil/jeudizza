@@ -80,6 +80,6 @@ class PizzaOrder(models.Model):
 class Payment(models.Model):
     debil = models.ForeignKey(Debil, verbose_name='déBIL')
     price = models.FloatField()
-
+    date = models.DateField(auto_now_add=True, null=True)
 
 from orders.signals import *

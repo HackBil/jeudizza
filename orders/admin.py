@@ -40,7 +40,7 @@ admin.site.register(Pizza, PizzaAdmin)
 
 
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('debil', 'price')
+    list_display = ('debil', 'price', 'date')
 
 admin.site.register(Payment, PaymentAdmin)
 
@@ -55,6 +55,12 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = (PizzaOrderInline,)
 
 admin.site.register(Order, OrderAdmin)
+
+
+class PizzaOrderAdmin(admin.ModelAdmin):
+    list_display = ('debil', 'pizza', 'crust', 'order')
+
+admin.site.register(PizzaOrder, PizzaOrderAdmin)
 
 
 def payments(request):
