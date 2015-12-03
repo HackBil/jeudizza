@@ -27,7 +27,7 @@
                             {% else %}
                                 text-muted
                             {% endif %}
-                            " data-value="{{ debil.get_solde}}" >{{ debil.get_solde|floatformat }} &euro;</td>
+                            " data-value="{{ debil.get_solde}}" >{{ debil.get_solde|stringformat:"f" }} &euro;</td>
                             <td class="sorted">{{ debil.name }}</td>
                             <td class="sorted">{{ debil.company.name }}</td>
                         </tr>
