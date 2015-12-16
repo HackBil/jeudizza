@@ -118,12 +118,13 @@ def who_work_today(request):
     last_order = Order.objects.all().order_by('pk').last()
 
     availabe_people = last_order.pizzaorder_set.all().values_list('debil').distinct().count()
-    if availabe_people < 3:
+    if availabe_people < 4:
         return render(request, 'who-work-today.html', {'not_enough_people': True})
 
     random.seed(last_order)
 
     # Pick the commander
+    # We're not using .order_by('?').first() because que want to use seeded random
     eligible_commanders = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(name__startswith=INVITED_PREFIX))
     commander = eligible_commanders[random.randint(0, len(eligible_commanders) - 1)]
 
@@ -134,6 +135,9 @@ def who_work_today(request):
     for x in range(0, WALKERS):
         index = random.randrange(len(eligible_walkers))
         walkers.append(eligible_walkers.pop(index))
+
+    eligible_trashmans = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(pk=commander.pk).exclude(pk__in=[walker.pk for walker in walkers]))
+    trashman = eligible_trashmans[random.randint(0, len(eligible_trashmans) - 1)]
 
     return render(request, 'who-work-today.html', locals())
 

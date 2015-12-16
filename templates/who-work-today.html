@@ -13,17 +13,23 @@
             </div>
             {%else %}
             <div class="panel-body">
-                <h2>Commande :</h2>
+                <h2>Commande:</h2>
                 <ul class="list-group">
                     <li class="list-group-item"> {{ commander.name }}</li>
                 </ul>
             </div>
             <div class="panel-body">
-                <h2>Vont chercher :</h2>
+                <h2>Vont chercher:</h2>
                 <ul class="list-group">
                     {% for walker in walkers %}
                     <li class="list-group-item"> {{ walker.name }}</li>
                     {% endfor %}
+                </ul>
+            </div>
+            <div class="panel-body">
+                <h2>Ira jetter les cartons de pizza:</h2>
+                <ul class="list-group">
+                    <li class="list-group-item"> {{ trashman.name }}</li>
                 </ul>
             </div>
             {% endif %}
