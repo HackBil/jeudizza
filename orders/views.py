@@ -121,7 +121,7 @@ def who_work_today(request):
     if availabe_people < 4:
         return render(request, 'who-work-today.html', {'not_enough_people': True})
 
-    random.seed(last_order)
+    random.seed(last_order.pk)
 
     # Pick the commander
     # We're not using .order_by('?').first() because que want to use seeded random
