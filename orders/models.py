@@ -44,6 +44,7 @@ class Pizza(models.Model):
     name = models.CharField(max_length=64, unique=True)
     url = models.CharField(max_length=256)
     price = models.FloatField(default=6)
+    available = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['name']
