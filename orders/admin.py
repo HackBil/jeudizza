@@ -34,7 +34,7 @@ admin.site.register(Debil, DebilAdmin)
 
 
 class PizzaAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'price')
+    list_display = ('name', 'url', 'price', 'available', 'calories')
 
 admin.site.register(Pizza, PizzaAdmin)
 

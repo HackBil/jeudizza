@@ -24,3 +24,8 @@ code.grayscale {
 .jumbotron-pizza p {
   font-size: 1em;
 }
+
+
+option{
+  font-family: "Courier New", Courier, "Liberation Mono", monospace;
+}

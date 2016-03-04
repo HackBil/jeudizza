@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Sum
+from django.utils.safestring import mark_safe
 
 
 class Company(models.Model):
@@ -41,16 +42,22 @@ class Crust(models.Model):
 
 
 class Pizza(models.Model):
+    CALORIES_MAN = 2400
+    CALORIES_WOMAN = 1800
+    SEX_PARTY = 200
+    HIGHEST_LENGTH = 24
     name = models.CharField(max_length=64, unique=True)
     url = models.CharField(max_length=256)
     price = models.FloatField(default=6)
     available = models.BooleanField(default=True)
+    calories = models.IntegerField(null=True)
 
     class Meta:
         ordering = ['name']
 
     def __str__(self):
-        return "%s (%g€)" % (self.name, self.price)
+        space = "&nbsp;"
+        return mark_safe("%s %s (%g€) | %s Cal | %2.0f%% H | %2.0f%% F | %2.0f soirées coquines" % (self.name, space * (self.HIGHEST_LENGTH - len(self.name)), self.price, self.calories, self.calories/self.CALORIES_MAN*100, self.calories/self.CALORIES_WOMAN*100, self.calories/self.SEX_PARTY))
 
 
 class Order(models.Model):

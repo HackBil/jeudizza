@@ -16,6 +16,7 @@ def home(request):
     top5_debils = PizzaOrder.objects.values('debil__name').exclude(debil__name__startswith=INVITED_PREFIX).annotate(count=Count('debil__name')).order_by("-count")[:10]
     top_crusts = PizzaOrder.objects.values('crust__name').annotate(count=Count('crust__name')).order_by("-count")
     total_money = PizzaOrder.objects.all().aggregate(sum=Sum('pizza__price'))
+    calories_total = PizzaOrder.objects.all().aggregate(sum=Sum('pizza__calories'))
 
     for debil in top5_debils:
         pizzas = PizzaOrder.objects.filter(debil__name=debil['debil__name']).values('pizza__name').annotate(count=Count('pizza__name')).order_by("-count")[:3]
@@ -55,6 +56,9 @@ def home(request):
         if crust_comment:
             crust_comment += ' ' + crust['message']
         crust_comments.append(crust_comment)
+
+    more_fat = Debil.objects.all().annotate(calories=Sum('pizzaorder__pizza__calories')).order_by('-calories').first()
+    crust_comments.append("%s est le plus fat : il a ingurgité %d Calories !" % (more_fat.name, more_fat.calories))
 
     return render(request, 'index.html', locals())
 
