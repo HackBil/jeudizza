@@ -45,7 +45,7 @@ class Pizza(models.Model):
     CALORIES_MAN = 2400
     CALORIES_WOMAN = 1800
     SEX_PARTY = 200
-    HIGHEST_LENGTH = 24
+    HIGHEST_LENGTH = 32
     name = models.CharField(max_length=64, unique=True)
     url = models.CharField(max_length=256)
     price = models.FloatField(default=6)
