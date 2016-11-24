@@ -26,8 +26,9 @@ class Debil(models.Model):
 
     def get_solde(self):
         paid = self.payment_set.aggregate(Sum('price')).get("price__sum") or 0.0
-        take = sum([pizza.get_price() for pizza in self.pizzaorder_set.all()])
-        return paid - take
+        depts = self.dept_set.aggregate(Sum('amount')).get("amount__sum") or 0.0
+        print("%s %f %f" % (self.name, paid, depts))
+        return paid - depts
 
 
 class Crust(models.Model):
@@ -85,9 +86,22 @@ class PizzaOrder(models.Model):
         return "%s - pate %s " % (self.pizza.name, self.crust.name)
 
 
+class Dept(models.Model):
+    debil = models.ForeignKey(Debil, verbose_name='déBIL')
+    amount = models.FloatField()
+    date = models.DateField(auto_now_add=True, null=True)
+
+
 class Payment(models.Model):
     debil = models.ForeignKey(Debil, verbose_name='déBIL')
     price = models.FloatField()
     date = models.DateField(auto_now_add=True, null=True)
+
+
+class CrepeOrder(models.Model):
+    debil_set = models.ManyToManyField(Debil, verbose_name='déBIL', related_name='crepeOrders', blank=True)
+    date = models.DateField()
+    price = models.FloatField(null=True, blank=True)
+    open = models.BooleanField(default=True)
 
 from orders.signals import *
