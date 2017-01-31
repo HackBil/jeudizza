@@ -6,19 +6,19 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-default">
-            {% for chore in chores}
+            {% for chore in chores %}
               <div class="panel-body">
                 <h2>{{chore.name}}</h2>
-                {% csrf_token %}
                 <form action="./" method="post">
+                  {% csrf_token %}
                   <input type="hidden" name="pk" value="{{chore.pk}}" />
                   <input type="submit" class="btn btn-default" value="J'ai besoin d'un déBIL !" />
                 </form>
                 <p>
-                  Le dernier a avoir été choisi était {{ chore.last_chosen_one.name }} le {{ chore.last_chosen_one.date|date:"d F Y G:i" }}
+                  Le dernier a avoir été choisi était {{ chore.last_debil.name }} le {{ chore.last_execution }}
                 </p>
               </div>
-            {% endfor}
+            {% endfor %}
         </div>
     </div>
     <div class="col-sm-6">

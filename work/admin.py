@@ -3,6 +3,7 @@ from django.conf.urls import patterns
 from django.shortcuts import render
 
 from orders.models import Debil, Order, Payment
+
 from work.models import Chore, ChoreDebil
 
 
@@ -91,3 +92,4 @@ def get_admin_urls(urls):
 
 admin_urls = get_admin_urls(admin.site.get_urls())
 admin.site.get_urls = admin_urls
+
