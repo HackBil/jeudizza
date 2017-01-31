@@ -82,23 +82,6 @@ def order(request):
     return render(request, 'order.html', {'form': form})
 
 
-def crepe_order(request):
-    if request.method == 'POST':
-        form = CrepeOrderForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data["debil_set"])
-            for debil in form.cleaned_data["debil_set"]:
-
-                CrepeOrder.objects.get(open=True).debil_set.add(debil)
-            return render(request, 'enjoy-crepe.html', {'form': form})
-        else:
-            return render(request, 'crepe-order.html', {'form': form})
-    # GET
-    form = CrepeOrderForm()
-
-    return render(request, 'crepe-order.html', {'form': form})
-
-
 def orders_history(request):
     # last 5 orders
     last_orders = list(Order.objects.all().order_by('-date'))[:5]
@@ -141,34 +124,6 @@ def who_work_today(request):
     availabe_people = last_order.pizzaorder_set.all().values_list('debil').distinct().count()
     if availabe_people < 4:
         return render(request, 'who-work-today.html', {'not_enough_people': True})
-
-    random.seed(last_order.pk)
-
-    # Pick the commander
-    # We're not using .order_by('?').first() because que want to use seeded random
-    eligible_commanders = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(name__startswith=INVITED_PREFIX))
-    commander = eligible_commanders[random.randint(0, len(eligible_commanders) - 1)]
-
-    eligible_walkers = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(pk=commander.pk).distinct())
-
-    # Pick walkers
-    walkers = []
-    for x in range(0, WALKERS):
-        index = random.randrange(len(eligible_walkers))
-        walkers.append(eligible_walkers.pop(index))
-
-    eligible_trashmans = list(Debil.objects.filter(pizzaorder__order=last_order).exclude(pk=commander.pk).exclude(pk__in=[walker.pk for walker in walkers]))
-    trashman = eligible_trashmans[random.randint(0, len(eligible_trashmans) - 1)]
-
-    return render(request, 'who-work-today.html', locals())
-
-
-def who_work_today_crepe(request):
-    last_order = CrepeOrder.objects.all().order_by('pk').last()
-
-    availabe_people = last_order.debil_set.all().distinct().count()
-    if availabe_people < 5:
-        return render(request, 'who-work-today-crepe.html', {'not_enough_people': True})
 
     random.seed(last_order.pk)
 
