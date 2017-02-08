@@ -2,7 +2,7 @@ from django.conf.urls import patterns
 from django.shortcuts import render
 from django.contrib import admin
 
-from orders.models import Company, Debil, Pizza, Crust, Order, PizzaOrder, Payment
+from orders.models import Company, Debil, Pizza, Crust, Order, PizzaOrder, Payment, Dept, CrepeOrder
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -45,6 +45,12 @@ class PaymentAdmin(admin.ModelAdmin):
 admin.site.register(Payment, PaymentAdmin)
 
 
+class DeptAdmin(admin.ModelAdmin):
+    list_display = ('debil', 'amount', 'date')
+
+admin.site.register(Dept, DeptAdmin)
+
+
 class PizzaOrderInline(admin.TabularInline):
     model = PizzaOrder
     extra = 3
@@ -55,6 +61,13 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = (PizzaOrderInline,)
 
 admin.site.register(Order, OrderAdmin)
+
+
+class CrepeOrderAdmin(admin.ModelAdmin):
+    list_display = ('date', 'open')
+    filter_horizontal = ('debil_set',)
+
+admin.site.register(CrepeOrder, CrepeOrderAdmin)
 
 
 class PizzaOrderAdmin(admin.ModelAdmin):

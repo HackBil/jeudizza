@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Count, Sum
-from orders.models import Order, PizzaOrder, Debil
-from orders.forms import PizzaOrderForm
+from orders.models import Order, PizzaOrder, Debil, CrepeOrder
+from orders.forms import PizzaOrderForm, CrepeOrderForm
 from orders.signals import INVITED_PREFIX
 
 from operator import itemgetter

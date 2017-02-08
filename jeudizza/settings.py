@@ -38,8 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    'django_cron',
-    'orders'
+    'orders',
+    'work'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,7 +128,3 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-CRON_CLASSES = [
-    "orders.cron.Jeudi",
-]
