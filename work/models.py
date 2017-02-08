@@ -30,7 +30,9 @@ class Chore(models.Model):
         return self.name
 
     def pick_random_debil(self):
-        return shuffle(list(self.chorables))[0]
+        debils = list(self.chorables.all())
+        shuffle(debils)
+        return debils[0]
 
 
 class ChoreDebil(models.Model):
