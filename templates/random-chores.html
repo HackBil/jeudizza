@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="panel panel-default">
             {% for chore in chores}
               <div class="panel-body">
@@ -19,6 +19,13 @@
                 </p>
               </div>
             {% endfor}
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            {% if chosen_one %}
+            <p>{{chosen_one}}</p>
+            {% endif %}
         </div>
     </div>
 </div>
