@@ -21,13 +21,32 @@
             {% endfor %}
         </div>
     </div>
+    {% if chosen_one %}
     <div class="col-sm-6">
         <div class="panel panel-default">
-            {% if chosen_one %}
-            <p>{{chosen_one}}</p>
-            {% endif %}
+          <div class="panel-body">
+            <p>
+              Et le/la gagnant(e) est....
+            </p>
+            <h3>{{chosen_one}}</h3>
+            <div class="row">
+              <form action="./" method="post" class="col-sm-6">
+                {% csrf_token %}
+                <input type="hidden" name="pk" value="{{chore.pk}}" />
+                <input type="hidden" name="chosen_one_pk" value="{{chosen_one.pk}}" />
+                <input type="hidden" name="accept" value="true" />
+                <input type="submit" class="btn btn-primary" value="J'accepte !" />
+              </form>
+              <form action="./" method="post" class="col-sm-6">
+                {% csrf_token %}
+                <input type="hidden" name="pk" value="{{chore.pk}}" />
+                <input type="submit" class="btn btn-default" value="Besoin d'un autre !" />
+              </form>
+            </div>
+          </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% endblock content %}
